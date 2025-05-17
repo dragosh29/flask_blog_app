@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+<div class="detail-card">
+    <h1> {{ post.title }} </h1>
+    <i>Written on {{ post.posted }} by
+        <a href="{{ url_for('main.display_user_profile', user_id=post.posted_by.id) }}">
+            {{ post.posted_by.username }}
+        </a>
+    </i>
+
+    <p>
+      {{ post.body }}
+    </p>
+    <small><i>Read count: {{post.reads}}</i></small>
+
+</div>
+{% if post.comments %}
+<div class="detail-card" style="margin-top: 20px;">
+    <h2>Comments</h2>
+    <ul style="list-style: none; padding: 0;">
+        {% for comment in post.comments %}
+        <li style="margin-bottom: 20px;">
+            <p>{{ comment.body }}</p>
+            <small><i>
+                By
+                <a href="{{ url_for('main.display_user_profile', user_id=comment.author.id) }}">
+                    {{ comment.author.username }}
+                </a>
+                on {{ comment.posted }}
+            </i></small>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<div class="detail-card" style="margin-top: 20px;">
+    <h2>No comments yet</h2>
+    <p>Be the first to comment!</p>
+</div>
+{% endif %}
+{% endblock %}

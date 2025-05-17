@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav>
+      <a href="{{ url_for('main.index') }}"
+         class="{{ 'active' if request.endpoint == 'main.index' else '' }}">
+         Home
+      </a>
+      <a href="{{ url_for('main.display_all_users') }}"
+         class="{{ 'active' if request.endpoint in ['main.display_all_users', 'main.display_user_profile'] else '' }}">
+         Users
+      </a>
+      <a href="{{ url_for('main.display_all_posts') }}"
+         class="{{ 'active' if request.endpoint in ['main.display_all_posts', 'main.display_post'] else '' }}">
+         Posts
+      </a>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

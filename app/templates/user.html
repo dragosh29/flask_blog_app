@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="detail-card">
+    <h1>{{ user.username }}</h1>
+    <p>
+      <strong>Email:</strong> {{ user.email }}<br>
+      <strong>Age:</strong> {{ user.age }}
+    </p>
+</div>
+{% if user.comments %}
+<div class="detail-card" style="margin-top: 20px;">
+    <h2>Comments</h2>
+    <ul style="list-style: none; padding: 0;">
+        {% for comment in user.comments %}
+        <li style="margin-bottom: 20px;">
+            <p>{{ comment.body }}</p>
+            <small><i>
+                On
+                <a href="{{ url_for('main.display_post', post_id=comment.post.id) }}">
+                    {{ comment.post.title }}
+                </a>
+                on {{ comment.posted }}
+            </i></small>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<div class="detail-card" style="margin-top: 20px;">
+    <h2>No comments yet</h2>
+    <p>Be the first to comment!</p>
+</div>
+{% endif %}
+{% endblock %}
